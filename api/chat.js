@@ -26,7 +26,7 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           model: "gpt-4o-mini",
           messages,
-          temperature: 0
+          temperature: 0.6
         })
       }
     );
@@ -37,10 +37,10 @@ export default async function handler(req, res) {
       data.choices?.[0]?.message?.content ||
       "No response from AI";
 
-    return res.status(200).json({ reply });
+    res.status(200).json({ reply });
 
   } catch (err) {
-    return res.status(500).json({
+    res.status(500).json({
       reply: "Server error: " + err.message
     });
   }
