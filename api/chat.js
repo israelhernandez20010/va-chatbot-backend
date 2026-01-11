@@ -1,13 +1,4 @@
 export default async function handler(req, res) {
-  // CORS
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Only POST allowed" });
   }
@@ -15,7 +6,7 @@ export default async function handler(req, res) {
   try {
     const { messages } = req.body;
 
-    const openaiRes = await fetch(
+    const response = await fetch(
       "https://api.openai.com/v1/chat/completions",
       {
         method: "POST",
@@ -26,22 +17,18 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           model: "gpt-4o-mini",
           messages,
-          temperature: 0.6
+          temperature: 0.3
         })
       }
     );
 
-    const data = await openaiRes.json();
+    const data = await response.json();
 
-    const reply =
-      data.choices?.[0]?.message?.content ||
-      "No response from AI";
-
-    res.status(200).json({ reply });
+    res.status(200).json({
+      reply: data.choices?.[0]?.message?.content || "No response"
+    });
 
   } catch (err) {
-    res.status(500).json({
-      reply: "Server error: " + err.message
-    });
+    res.status(500).json({ error: err.message });
   }
 }
