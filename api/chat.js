@@ -75,12 +75,12 @@ const isRelated = allowedTopics.some(keyword =>
   userMessage.includes(keyword)
 );
 
-if (!isRelated) {
-  return res.status(200).json({
-    reply:
-      "Sorry, I can only answer questions about Israel Hernandez, including my profile, skills, experience, projects, services, and contact information."
-  });
-}
+//if (!isRelated) {
+  //return res.status(200).json({
+   //reply:
+      //"Sorry, I can only answer questions about Israel Hernandez, including my profile, skills, experience, projects, services, and contact information."
+  //});
+//}
 
     const openaiRes = await fetch(
       "https://api.openai.com/v1/chat/completions",
