@@ -28,6 +28,8 @@ const allowedTopics = [
   "profile",
   "schedule",
   "location",
+  "home",
+  "phone",
   "introduce",
   "introduction",
   "experience",
