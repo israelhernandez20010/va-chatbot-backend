@@ -1,3 +1,14 @@
+async function getKnowledgeBase() {
+  const SHEET_URL =
+    "https://docs.google.com/spreadsheets/d/1rj-WOUWbw-x_MCAfQcm1MAXlbWasKLVPRcmXzxFQQlQ/export?format=csv";
+
+  const response = await fetch(SHEET_URL);
+
+  const csv = await response.text();
+
+  return csv;
+}
+
 export default async function handler(req, res) {
   // ✅ CORS HEADERS (CRITICAL)
   res.setHeader("Access-Control-Allow-Origin", "*");
