@@ -3,10 +3,7 @@ async function getKnowledgeBase() {
     "https://docs.google.com/spreadsheets/d/1rj-WOUWbw-x_MCAfQcm1MAXlbWasKLVPRcmXzxFQQlQ/export?format=csv";
 
   const response = await fetch(SHEET_URL);
-
-  const csv = await response.text();
-
-  return csv;
+  return await response.text();
 }
 
 export default async function handler(req, res) {
@@ -26,7 +23,8 @@ export default async function handler(req, res) {
 
   try {
     const { messages } = req.body;
-    const knowledgeBase = await getKnowledgeBase();
+
+const knowledgeBase = await getKnowledgeBase();
     // Get latest user message
 const userMessage = messages[messages.length - 1].content.toLowerCase();
 
@@ -97,16 +95,13 @@ if (!isRelated) {
   messages: [
     {
       role: "system",
-      content:
-`You are Israel Hernandez's AI assistant.
+      content: `You are Israel Hernandez's AI assistant.
 
-Answer ONLY using the information below.
-
-Knowledge Base:
+Use ONLY the following business knowledge base when answering.
 
 ${knowledgeBase}
 
-If the answer is not in the knowledge base, politely say that you don't have that information.`
+If the answer is not found, politely say you don't have that information.`
     },
     ...messages
   ],
@@ -118,8 +113,8 @@ If the answer is not in the knowledge base, politely say that you don't have tha
     const data = await openaiRes.json();
 
     return res.status(200).json({
-      reply: data.choices?.[0]?.message?.content || "No response"
-    });
+  reply: knowledgeBase
+});
 
   } catch (err) {
     return res.status(500).json({
