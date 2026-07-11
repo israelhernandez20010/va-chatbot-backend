@@ -35,8 +35,6 @@ const allowedTopics = [
 
 "hernandez",
 
-"you",
-
 "your",
 
 "about",
