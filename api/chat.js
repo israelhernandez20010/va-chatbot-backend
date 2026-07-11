@@ -27,6 +27,7 @@ const allowedTopics = [
   "about",
   "profile",
   "schedule",
+  "Address",
   "location",
   "home",
   "phone",
