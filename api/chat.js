@@ -1,3 +1,17 @@
+function formatKnowledgeBase(csv) {
+  const lines = csv.trim().split("\n");
+
+  // alisin ang header
+  lines.shift();
+
+  return lines
+    .map(line => {
+      const [question, answer] = line.split(",");
+      return `Question: ${question}\nAnswer: ${answer}`;
+    })
+    .join("\n\n");
+}
+
 async function getKnowledgeBase() {
   const SHEET_URL =
     "https://docs.google.com/spreadsheets/d/1rj-WOUWbw-x_MCAfQcm1MAXlbWasKLVPRcmXzxFQQlQ/export?format=csv";
@@ -24,7 +38,9 @@ export default async function handler(req, res) {
   try {
     const { messages } = req.body;
 
-const knowledgeBase = await getKnowledgeBase();
+const knowledgeBase = formatKnowledgeBase(
+  await getKnowledgeBase()
+);
     // Get latest user message
 const userMessage = messages[messages.length - 1].content.toLowerCase();
 
