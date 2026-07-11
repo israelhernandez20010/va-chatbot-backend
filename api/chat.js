@@ -121,7 +121,7 @@ return res.status(200).json({
 
 reply:
 
-  "Sorry, I can only answer questions about Israel Hernandez, including my profile, skills, experience, projects, services, and contact information."
+  "Sorry, I can only answer questions about Israel Hernandez, including my profile, skills, experience, projects, services, and contact information.I can assist—just message me or contact me at israelhernandez20010@gmail.com / +639331389068."
 });
 
 }
