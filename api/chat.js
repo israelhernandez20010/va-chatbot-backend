@@ -15,6 +15,57 @@ export default async function handler(req, res) {
 
   try {
     const { messages } = req.body;
+    // Get latest user message
+const userMessage = messages[messages.length - 1].content.toLowerCase();
+
+// Allowed topics
+const allowedTopics = [
+  "israel",
+  "hernandez",
+  "you",
+  "your",
+  "about",
+  "profile",
+  "introduce",
+  "introduction",
+  "experience",
+  "skill",
+  "skills",
+  "tool",
+  "tools",
+  "service",
+  "services",
+  "portfolio",
+  "project",
+  "projects",
+  "contact",
+  "email",
+  "phone",
+  "availability",
+  "hire",
+  "work",
+  "driver",
+  "video",
+  "editing",
+  "openai",
+  "chatbot",
+  "github",
+  "vercel",
+  "ai",
+  "resume",
+  "cv"
+];
+
+const isRelated = allowedTopics.some(keyword =>
+  userMessage.includes(keyword)
+);
+
+if (!isRelated) {
+  return res.status(200).json({
+    reply:
+      "Sorry, I can only answer questions about Israel Hernandez, including my profile, skills, experience, projects, services, and contact information."
+  });
+}
 
     const openaiRes = await fetch(
       "https://api.openai.com/v1/chat/completions",
