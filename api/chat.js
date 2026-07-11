@@ -26,6 +26,7 @@ export default async function handler(req, res) {
 
   try {
     const { messages } = req.body;
+    const knowledgeBase = await getKnowledgeBase();
     // Get latest user message
 const userMessage = messages[messages.length - 1].content.toLowerCase();
 
@@ -92,10 +93,25 @@ if (!isRelated) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "gpt-5.4-nano",
-          messages,
-          temperature: 0.3
-        })
+  model: "gpt-5.4-nano",
+  messages: [
+    {
+      role: "system",
+      content:
+`You are Israel Hernandez's AI assistant.
+
+Answer ONLY using the information below.
+
+Knowledge Base:
+
+${knowledgeBase}
+
+If the answer is not in the knowledge base, politely say that you don't have that information.`
+    },
+    ...messages
+  ],
+  temperature: 0.3
+})
       }
     );
 
