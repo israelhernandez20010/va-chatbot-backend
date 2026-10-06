@@ -24,7 +24,7 @@ Plain text only, warm, concise.
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "gpt-5-nano",
+        model: "gpt-5.4-nano",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           { role: "user", content: userQuestion }
