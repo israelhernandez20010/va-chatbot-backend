@@ -42,7 +42,7 @@ If question is about 【entity-bigbang¦canonical_name=bigbang】, science, kpop
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini", // palitan mo gpt-5.4-nano wala pa yan, mag e-error
+        model: "gpt-5-nano", // palitan mo gpt-5.4-nano wala pa yan, mag e-error
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           { role: "user", content: messages[messages.length - 1].content }
