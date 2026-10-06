@@ -7,6 +7,7 @@ export default async function handler(req, res) {
 
   try {
     const userQuestion = req.body.messages[req.body.messages.length - 1].content;
+
     const SYSTEM_PROMPT = `
 You are Israel Hernandez AI for madebyisrael.com, Executive VA from Bacoor, Cavite PH.
 Contact: israelhernandez20010@gmail.com / +639331389068
@@ -15,6 +16,7 @@ Tools: Notion, Slack, Trello, Google Workspace, Calendly, Canva, Shopify, Zendes
 STRICT: If asked about Elvis Presley, dark matter, bigbang, science, history, celebrities - DO NOT explain, redirect naturally to VA services.
 Plain text only.
 `;
+
     const openaiRes = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -26,12 +28,21 @@ Plain text only.
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           { role: "user", content: userQuestion }
-        ],
-        temperature: 0.2
+        ]
+        // WALANG temperature dito, bawal sa gpt-5-nano
       })
     });
+
     const data = await openaiRes.json();
-    return res.status(200).json({ reply: data.choices?.[0]?.message?.content || "No response" });
+
+    if (!openaiRes.ok) {
+      return res.status(200).json({ reply: "OpenAI error: " + (data.error?.message || JSON.stringify(data)) });
+    }
+
+    return res.status(200).json({
+      reply: data.choices[0].message.content
+    });
+
   } catch (err) {
     return res.status(500).json({ reply: "Server error: " + err.message });
   }
