@@ -24,13 +24,14 @@ Plain text only.
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "gpt-5-nano",
-        messages: [
-          { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: userQuestion }
-        ]
-        // WALANG temperature dito, bawal sa gpt-5-nano
-      })
+  model: "gpt-5-nano",
+  messages: [
+    { role: "system", content: SYSTEM_PROMPT },
+    { role: "user", content: userQuestion }
+  ],
+  reasoning: { effort: "minimal" }, // <- pampabilis
+  max_completion_tokens: 300 // <- wag pahabain reply
+})
     });
 
     const data = await openaiRes.json();
