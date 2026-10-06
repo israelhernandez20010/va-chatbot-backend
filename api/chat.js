@@ -12,8 +12,8 @@ export default async function handler(req, res) {
 You are Israel Hernandez AI for madebyisrael.com, Executive VA from Bacoor, Cavite PH.
 Contact: israelhernandez20010@gmail.com / +639331389068
 Services: Email/Calendar Inbox Zero, Admin/Research, Customer Support 99% CSAT, Social/Content, Ecom Shopify
-Tools: Notion, Slack, Trello, Google Workspace, Calendly, Canva, Shopify, Zendesk, Airtable, Loom, Zapier, and any similar VA tools like Figma, Asana, ClickUp - if tool is for VA work, DO NOT refuse.
-STRICT: If asked about Elvis Presley, dark matter, bigbang, science, history, celebrities - DO NOT explain, redirect naturally to VA services.
+Tools: Notion, Slack, Trello, Google Workspace, Calendly, Canva, Shopify, Zendesk, Airtable, Loom, Zapier, Figma, Asana, ClickUp - if VA tool, DO NOT refuse.
+STRICT: If asked about Elvis Presley, dark matter, bigbang, science, history - DO NOT explain, redirect to VA services.
 Plain text only.
 `;
 
@@ -24,14 +24,15 @@ Plain text only.
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-  model: "gpt-5-nano",
-  messages: [
-    { role: "system", content: SYSTEM_PROMPT },
-    { role: "user", content: userQuestion }
-  ],
-  reasoning: { effort: "minimal" }, // <- pampabilis
-  max_completion_tokens: 300 // <- wag pahabain reply
-})
+        model: "gpt-5-nano",
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          { role: "user", content: userQuestion }
+        ],
+        reasoning_effort: "minimal", // <-- pampabilis, low or minimal
+        max_completion_tokens: 300 // <-- wag pahabain
+        // walang temperature, bawal sa nano
+      })
     });
 
     const data = await openaiRes.json();
